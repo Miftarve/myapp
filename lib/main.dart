@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Roboto',
       ),
       home: HomeScreen(),
     );
@@ -27,37 +28,137 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Benvenuto in Football App")),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue.shade800, Colors.blue.shade500],
+          ),
+        ),
+        child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                child: Text("Visualizza le Rose"),
-                onPressed: () {
-                  // Modalità visualizzazione: matchMode = false
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CampionatiScreen(matchMode: false),
-                    ),
-                  );
-                },
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
+                child: Text(
+                  "FOOTBALL APP",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                  ),
+                ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                child: Text("Gioca Partita"),
-                onPressed: () {
-                  // Modalità partita: matchMode = true
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CampionatiScreen(matchMode: true),
+              Expanded(
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(24.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network(
+                          'https://cdn-icons-png.flaticon.com/512/1006/1006657.png',
+                          height: 150,
+                          color: Colors.white,
+                        ),
+                        SizedBox(height: 50),
+                        Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          height: 60,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.blue.shade800,
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.people_outline),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Visualizza le Rose",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              // Modalità visualizzazione: matchMode = false
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          CampionatiScreen(matchMode: false),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          height: 60,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.blue.shade800,
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.sports_soccer),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Gioca Partita",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              // Modalità partita: matchMode = true
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          CampionatiScreen(matchMode: true),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Text(
+                  "Tutte le statistiche del calcio mondiale",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white.withOpacity(0.8),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
               ),
             ],
           ),
@@ -110,67 +211,145 @@ class _CampionatiScreenState extends State<CampionatiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Campionati")),
-      body:
-          isLoading
-              ? Center(child: CircularProgressIndicator())
-              : GridView.builder(
-                padding: const EdgeInsets.all(8),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
-                  childAspectRatio: 1.2,
-                ),
-                itemCount: leagues.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text(
+          "Campionati",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF1E3C72), Color(0xFF2A5298)],
+          ),
+        ),
+        child: SafeArea(
+          child:
+              isLoading
+                  ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
-                    elevation: 8,
-                    shadowColor: Colors.black.withOpacity(0.2),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => SquadreScreen(
-                                  leagueId: leagues[index]["league"]["id"],
-                                  matchMode: widget.matchMode,
-                                ),
+                  )
+                  : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          widget.matchMode
+                              ? "Seleziona un campionato per la partita"
+                              : "Esplora i principali campionati",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              leagues[index]["league"]["logo"],
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            leagues[index]["league"]["name"],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: GridView.builder(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 16.0,
+                                  mainAxisSpacing: 16.0,
+                                  childAspectRatio: 0.85,
+                                ),
+                            itemCount: leagues.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => SquadreScreen(
+                                              leagueId:
+                                                  leagues[index]["league"]["id"],
+                                              matchMode: widget.matchMode,
+                                              leagueName:
+                                                  leagues[index]["league"]["name"],
+                                              leagueLogo:
+                                                  leagues[index]["league"]["logo"],
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Image.network(
+                                            leagues[index]["league"]["logo"],
+                                            width: 80,
+                                            height: 80,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Text(
+                                          leagues[index]["league"]["name"],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            color: Colors.blue.shade900,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        leagues[index]["country"]["name"],
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+        ),
+      ),
     );
   }
 }
@@ -179,7 +358,15 @@ class _CampionatiScreenState extends State<CampionatiScreen> {
 class SquadreScreen extends StatefulWidget {
   final int leagueId;
   final bool matchMode;
-  SquadreScreen({required this.leagueId, this.matchMode = false});
+  final String leagueName;
+  final String leagueLogo;
+
+  SquadreScreen({
+    required this.leagueId,
+    this.matchMode = false,
+    this.leagueName = "",
+    this.leagueLogo = "",
+  });
 
   @override
   _SquadreScreenState createState() => _SquadreScreenState();
@@ -229,7 +416,11 @@ class _SquadreScreenState extends State<SquadreScreen> {
         context,
         MaterialPageRoute(
           builder:
-              (context) => PartitaScreen(selectedTeams[0], selectedTeams[1]),
+              (context) => PartitaScreen(
+                selectedTeams[0],
+                selectedTeams[1],
+                allTeams: teams, // Passa tutte le squadre della lega
+              ),
         ),
       );
     }
@@ -238,89 +429,287 @@ class _SquadreScreenState extends State<SquadreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(widget.matchMode ? "Seleziona due squadre" : "Squadre"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          widget.matchMode ? "Seleziona due squadre" : widget.leagueName,
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
-      body:
-          isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                children: [
-                  Expanded(
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(8),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: widget.matchMode ? 3 : 2,
-                        crossAxisSpacing: 8.0,
-                        mainAxisSpacing: 8.0,
-                        childAspectRatio: 1.1,
-                      ),
-                      itemCount: teams.length,
-                      itemBuilder: (context, index) {
-                        // Se matchMode è attivo, abilita la selezione multipla
-                        // Altrimenti, tocca la squadra per visualizzare la rosa
-                        return GestureDetector(
-                          onTap: () {
-                            if (widget.matchMode) {
-                              selectTeam(teams[index]);
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => GiocatoriScreen(
-                                        teamId: teams[index]["team"]["id"],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Color(0xFF134E5E), Color(0xFF71B280)],
+          ),
+        ),
+        child: SafeArea(
+          child:
+              isLoading
+                  ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                  : Column(
+                    children: [
+                      // League header
+                      if (widget.leagueLogo.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 16.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.network(
+                                  widget.leagueLogo,
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              if (widget.matchMode)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 12.0),
+                                  child: Text(
+                                    "Seleziona due squadre per giocare",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+
+                      // Selected teams display for match mode
+                      if (widget.matchMode && selectedTeams.isNotEmpty)
+                        Container(
+                          margin: EdgeInsets.all(12),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              for (int i = 0; i < selectedTeams.length; i++)
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Image.network(
+                                          selectedTeams[i]["team"]["logo"],
+                                          width: 40,
+                                          height: 40,
+                                        ),
                                       ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        selectedTeams[i]["team"]["name"],
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if (selectedTeams.length == 1)
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 56,
+                                        height: 56,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white24,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white70,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        "Seleziona",
+                                        style: TextStyle(color: Colors.white70),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+
+                      // Teams grid
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: widget.matchMode ? 3 : 2,
+                                  crossAxisSpacing: 12.0,
+                                  mainAxisSpacing: 12.0,
+                                  childAspectRatio:
+                                      widget.matchMode ? 0.8 : 0.9,
+                                ),
+                            itemCount: teams.length,
+                            itemBuilder: (context, index) {
+                              bool isSelected =
+                                  widget.matchMode &&
+                                  selectedTeams.contains(teams[index]);
+
+                              return GestureDetector(
+                                onTap: () {
+                                  if (widget.matchMode) {
+                                    selectTeam(teams[index]);
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => GiocatoriScreen(
+                                              teamId:
+                                                  teams[index]["team"]["id"],
+                                            ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        isSelected
+                                            ? Colors.green.shade100
+                                            : Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    border:
+                                        isSelected
+                                            ? Border.all(
+                                              color: Colors.green,
+                                              width: 3,
+                                            )
+                                            : null,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        spreadRadius: 1,
+                                        blurRadius: 3,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (isSelected)
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 8.0,
+                                          ),
+                                          child: Icon(
+                                            Icons.check_circle,
+                                            color: Colors.green,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      Image.network(
+                                        teams[index]["team"]["logo"],
+                                        width: 60,
+                                        height: 60,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          teams[index]["team"]["name"],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color:
+                                                isSelected
+                                                    ? Colors.green.shade800
+                                                    : Colors.black87,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
-                            }
-                          },
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              side:
-                                  widget.matchMode &&
-                                          selectedTeams.contains(teams[index])
-                                      ? BorderSide(
-                                        color: Colors.green,
-                                        width: 3,
-                                      )
-                                      : BorderSide.none,
-                            ),
-                            elevation: 5,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.network(
-                                  teams[index]["team"]["logo"],
-                                  width: 50,
-                                  height: 50,
+                            },
+                          ),
+                        ),
+                      ),
+
+                      // Play match button
+                      if (widget.matchMode)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 56,
+                            child: ElevatedButton(
+                              onPressed:
+                                  selectedTeams.length == 2 ? startMatch : null,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                                disabledBackgroundColor: Colors.grey.shade400,
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                                SizedBox(height: 8),
-                                Text(
-                                  teams[index]["team"]["name"],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.sports_soccer),
+                                  SizedBox(width: 12),
+                                  Text(
+                                    "Gioca Partita",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                    ],
                   ),
-                  if (widget.matchMode)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        onPressed:
-                            selectedTeams.length == 2 ? startMatch : null,
-                        child: Text("Gioca Partita"),
-                      ),
-                    ),
-                  SizedBox(height: 10),
-                ],
-              ),
+        ),
+      ),
     );
   }
 }
