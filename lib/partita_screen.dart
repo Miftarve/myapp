@@ -6,7 +6,7 @@ import 'package:myapp/results_screen.dart';
 class PartitaScreen extends StatefulWidget {
   final Map homeTeam;
   final Map awayTeam;
-  final List allTeams; // Aggiungi questo parametro per passare tutte le squadre
+  final List allTeams;
 
   PartitaScreen(this.homeTeam, this.awayTeam, {required this.allTeams});
 
@@ -42,7 +42,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
       );
     });
 
-    // Timer che aggiorna il tempo di gioco e genera eventi
     gameTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (currentMinute >= 90) {
         endMatch();
@@ -53,9 +52,7 @@ class _PartitaScreenState extends State<PartitaScreen> {
         currentMinute += 1;
       });
 
-      // Possibilità di generare eventi durante la partita
       if (random.nextInt(10) < 2) {
-        // 20% chance per minute
         generateRandomEvent();
       }
     });
@@ -72,18 +69,15 @@ class _PartitaScreenState extends State<PartitaScreen> {
   }
 
   void generateRandomEvent() {
-    // Decide quale squadra genera l'evento (50/50)
     bool isHomeTeam = random.nextBool();
     String teamName =
         isHomeTeam
             ? widget.homeTeam['team']['name']
             : widget.awayTeam['team']['name'];
 
-    // Possibili eventi
     int eventChance = random.nextInt(100);
 
     if (eventChance < 10) {
-      // Gol (10% degli eventi)
       setState(() {
         if (isHomeTeam) {
           homeScore += 1;
@@ -99,7 +93,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
         );
       });
     } else if (eventChance < 25) {
-      // Tiro in porta (15% degli eventi)
       setState(() {
         events.add(
           GameEvent(
@@ -110,7 +103,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
         );
       });
     } else if (eventChance < 45) {
-      // Calcio d'angolo (20% degli eventi)
       setState(() {
         events.add(
           GameEvent(
@@ -121,7 +113,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
         );
       });
     } else if (eventChance < 75) {
-      // Fallo (30% degli eventi)
       setState(() {
         events.add(
           GameEvent(
@@ -132,7 +123,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
         );
       });
     } else if (eventChance < 85) {
-      // Cartellino giallo (10% degli eventi)
       setState(() {
         events.add(
           GameEvent(
@@ -143,7 +133,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
         );
       });
     } else if (eventChance < 88) {
-      // Cartellino rosso (3% degli eventi)
       setState(() {
         events.add(
           GameEvent(
@@ -154,7 +143,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
         );
       });
     } else {
-      // Fuorigioco (12% degli eventi)
       setState(() {
         events.add(
           GameEvent(
@@ -189,7 +177,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
       appBar: AppBar(title: Text("Partita"), centerTitle: true),
       body: Column(
         children: [
-          // Scoreboard
           Container(
             padding: EdgeInsets.all(16.0),
             color: Colors.blue.shade800,
@@ -259,7 +246,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
             ),
           ),
 
-          // Match controls
           if (!isMatchStarted && !isMatchEnded)
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -272,14 +258,13 @@ class _PartitaScreenState extends State<PartitaScreen> {
               ),
             ),
 
-          // Match events feed
           Expanded(
             child: Container(
               color: Colors.grey.shade100,
               child: ListView.builder(
                 padding: EdgeInsets.all(8.0),
                 itemCount: events.length,
-                reverse: true, // Most recent events at the top
+                reverse: true,
                 itemBuilder: (context, index) {
                   final event = events[events.length - 1 - index];
                   return Card(
@@ -304,7 +289,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
             ),
           ),
 
-          // Match statistics (can be expanded in a future update)
           if (isMatchEnded)
             Container(
               padding: EdgeInsets.all(16),
@@ -401,7 +385,6 @@ class _PartitaScreenState extends State<PartitaScreen> {
   }
 }
 
-// Enumerazione per i tipi di eventi di gioco
 enum EventType {
   goal,
   shot,
@@ -414,7 +397,6 @@ enum EventType {
   finalWhistle,
 }
 
-// Classe per rappresentare un evento di gioco
 class GameEvent {
   final int minute;
   final EventType eventType;

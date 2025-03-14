@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// Schermata iniziale con scelta delle modalità
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -92,7 +91,6 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              // Modalità visualizzazione: matchMode = false
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -132,7 +130,6 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              // Modalità partita: matchMode = true
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -168,11 +165,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-/// Schermata dei campionati (leagues)
 class CampionatiScreen extends StatefulWidget {
-  final bool
-  matchMode; // true per selezionare squadre e giocare, false per vedere le rose
-
+  final bool matchMode;
   CampionatiScreen({this.matchMode = false});
 
   @override
@@ -354,7 +348,6 @@ class _CampionatiScreenState extends State<CampionatiScreen> {
   }
 }
 
-/// Schermata delle squadre: se matchMode è false, tocca la squadra per vederne la rosa; se true, scegli due squadre per giocare.
 class SquadreScreen extends StatefulWidget {
   final int leagueId;
   final bool matchMode;
@@ -419,7 +412,7 @@ class _SquadreScreenState extends State<SquadreScreen> {
               (context) => PartitaScreen(
                 selectedTeams[0],
                 selectedTeams[1],
-                allTeams: teams, // Passa tutte le squadre della lega
+                allTeams: teams,
               ),
         ),
       );
@@ -457,7 +450,6 @@ class _SquadreScreenState extends State<SquadreScreen> {
                   )
                   : Column(
                     children: [
-                      // League header
                       if (widget.leagueLogo.isNotEmpty)
                         Padding(
                           padding: const EdgeInsets.only(
@@ -495,7 +487,6 @@ class _SquadreScreenState extends State<SquadreScreen> {
                           ),
                         ),
 
-                      // Selected teams display for match mode
                       if (widget.matchMode && selectedTeams.isNotEmpty)
                         Container(
                           margin: EdgeInsets.all(12),
@@ -567,7 +558,6 @@ class _SquadreScreenState extends State<SquadreScreen> {
                           ),
                         ),
 
-                      // Teams grid
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -670,7 +660,6 @@ class _SquadreScreenState extends State<SquadreScreen> {
                         ),
                       ),
 
-                      // Play match button
                       if (widget.matchMode)
                         Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -714,7 +703,6 @@ class _SquadreScreenState extends State<SquadreScreen> {
   }
 }
 
-/// Schermata per visualizzare la rosa (giocatori) di una squadra
 class GiocatoriScreen extends StatefulWidget {
   final int teamId;
 
@@ -769,7 +757,6 @@ class _GiocatoriScreenState extends State<GiocatoriScreen> {
                     ),
                     subtitle: Text("Età: ${players[index]["player"]["age"]}"),
                     onTap: () {
-                      // Visualizza dettagli del giocatore
                       showDialog(
                         context: context,
                         builder: (context) {
