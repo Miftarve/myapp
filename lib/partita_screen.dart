@@ -166,6 +166,7 @@ class _PartitaScreenState extends State<PartitaScreen> {
               awayTeam: widget.awayTeam,
               homeScore: homeScore,
               awayScore: awayScore,
+              currentMatchday: 1,
             ),
       ),
     );
